@@ -47,8 +47,29 @@ const makeDomo = async (req, res) => {
   }
 };
 
+const deleteDomo = async (req, res) => {
+  if (!req.body.id) {
+    return res.status(400).json({ error: 'All fields are required!' });
+  }
+
+  try {
+    const query = { owner: req.session.account._id, _id: req.body.id };
+    const doc = await Domo.deleteOne(query).lean().exec();
+
+    if (!doc.acknowledged || doc.deletedCount !== 1) {
+      return res.status(500).json({ error: 'Error deleting domo! (Really unexpected)' });
+    }
+
+    return res.status(204).json({ message: 'Domo deleted!' });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Error deleting domo!' });
+  }
+};
+
 module.exports = {
   makerPage,
   getDomos,
   makeDomo,
+  deleteDomo,
 };

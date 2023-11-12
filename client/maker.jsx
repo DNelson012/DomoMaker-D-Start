@@ -17,7 +17,18 @@ const handleDomo = (e) => {
   }
 
   helper.sendPost(e.target.action, { name, level, age }, loadDomosFromServer);
+  return false;
+}
 
+const deleteDomo = (e) => {
+  const id =  e.target.getAttribute('domoID');
+
+  if (!id) {
+    helper.handleError('Requires an ID for a domo in the database!');
+    return false;
+  }
+
+  helper.sendDelete('/deleteDomo', { id }, loadDomosFromServer);
   return false;
 }
 
@@ -56,7 +67,8 @@ const DomoList = (props) => {
       <div key={domo._id} className="domo">
         <img src="/assets/img/domoface.jpeg" alt="domo face" className='domoFace' />
         <h3 className='domoName'>Name: {domo.name}</h3>
-        <h3 className='domoAge'>Level: {domo.level}</h3>
+        <button onClick={deleteDomo} domoID={domo._id} className='domoDel'>DEL</button>
+        <h3 className='domoLevel'>Level: {domo.level}</h3>
         <h3 className='domoAge'>Age: {domo.age}</h3>
       </div>
     );

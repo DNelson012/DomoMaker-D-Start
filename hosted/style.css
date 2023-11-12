@@ -248,7 +248,7 @@ h3.domoName {
     font-size: 1.5em;
 }
 
-h3.domoAge {
+h3.domoAge, h3.domoLevel {
     float:right;
     text-align: left;
     width: 100px;
@@ -263,4 +263,10 @@ h3.domoAge {
 
 .domo:last-child {
     margin-bottom:10px;
+}
+
+.domoDel {
+    float: right;
+    color: white;
+    background-color: red;
 }

@@ -26,8 +26,6 @@ const sendPost = async (url, data, handler) => {
   const result = await response.json();
   document.getElementById('domoMessage').classList.add('hidden');
 
-  console.log(result);
-
   if(result.redirect) {
     window.location = result.redirect;
   }
@@ -41,8 +39,32 @@ const sendPost = async (url, data, handler) => {
   }
 };
 
+const sendDelete = async (url, data, handler) => {
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  const result = await response;
+  console.log(result);
+  document.getElementById('domoMessage').classList.add('hidden');
+
+  // if(result.error) {
+  //   handleError(result.error);
+  // }
+
+  if(handler) {
+    //handler(result);
+    handler();
+  }
+}
+
 module.exports = {
   handleError,
   hideError,
   sendPost,
+  sendDelete,
 }
